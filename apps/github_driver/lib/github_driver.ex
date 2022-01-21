@@ -4,6 +4,7 @@ defmodule GithubDriver do
   """
   alias GithubDriver.Cache
 
+  @cache GithubDriver.Cache
   @driver GithubDriver.Tentacat
   @cache_expiry 5
 
@@ -18,35 +19,37 @@ defmodule GithubDriver do
   def fetch_repositories(opts \\ []) do
     driver = opts[:driver] || @driver
     cache_expiry = opts[:cache_expiry] || @cache_expiry
-    case Cache.fetch(Cache, :last_request) do
+    cache_name = opts[:cache] || @cache
+
+    case Cache.fetch(cache_name, :last_request) do
       {:ok, result}  ->
-        if time_not_elapsed(cache_expiry, result) do
-          Cache.fetch_data()
+        unless time_elapsed(cache_expiry, result) do
+          Cache.fetch_data(cache_name)
         else
-          request_and_cache(driver)
+          request_and_cache(driver, cache_name)
         end
       :error ->
-        request_and_cache(driver)
+        request_and_cache(driver, cache_name)
     end
 
   end
 
-  defp time_not_elapsed(time_limit_minutes, date) do
+  defp time_elapsed(time_limit_minutes, date) do
     time_diff = DateTime.diff(DateTime.utc_now(), date)
     time_limit_seconds = time_limit_minutes * 60
-    time_limit_seconds > time_diff
+    time_limit_seconds < time_diff
   end
 
-  defp request_and_cache(driver) do
+  defp request_and_cache(driver, cache) do
     with %Result{status: :ok, response: response} <- driver.request()
     do
-      Cache.put(Cache, :last_request, DateTime.utc_now())
-      Cache.put(Cache, :data, response)
+      Cache.put(cache, :last_request, DateTime.utc_now())
+      Cache.put(cache, :data, response)
       response
     else
       _ ->
-        Cache.put(Cache, :last_request, DateTime.utc_now())
-        Cache.fetch_data()
+        Cache.put(cache, :last_request, DateTime.utc_now())
+        Cache.fetch_data(cache)
     end
   end
 

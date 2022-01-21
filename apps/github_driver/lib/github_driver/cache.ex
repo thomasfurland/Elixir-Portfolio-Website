@@ -1,8 +1,8 @@
 defmodule GithubDriver.Cache do
   use GenServer
 
-  def fetch_data() do
-    with {:ok, data} <- fetch(__MODULE__, :data)
+  def fetch_data(cache \\ __MODULE__) do
+    with {:ok, data} <- fetch(cache, :data)
     do
       data
     else
