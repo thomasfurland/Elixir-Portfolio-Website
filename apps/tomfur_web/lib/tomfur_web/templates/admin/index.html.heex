@@ -1,0 +1,9 @@
+<section class="phx-hero">
+  <h1><%= gettext "Welcome to %{name}!", name: "Admin Backend" %></h1>
+</section>
+
+<section class="row">
+  <ul>
+    <li><%= link "Pages", to: Routes.page_path(@conn, :index) %></li>
+  </ul>
+</section>

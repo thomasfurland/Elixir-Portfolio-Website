@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <%= csrf_meta_tag() %>
+    <%= live_title_tag assigns[:page_title] || "Tomfur", suffix: " · Phoenix Framework" %>
+    <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
+    <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
+  </head>
+  <body>
+    <sidebar-layout>
+      <div class="navbar" slot="sidebar">
+        <span id="tf-logo">tf.</span>
+        <nav>
+          <%= link "Projects", to: Routes.project_path(@conn, :index) %>
+          <%# link "Skills", to: Routes.skill_path(@conn, :index) %>
+          <%= link "About", to: Routes.page_path(@conn, :about) %>
+          <%= link "Contact", to: Routes.page_path(@conn, :contact) %>
+          <%= link "Resume", to: Routes.download_path(@conn, :resume), target: "_blank"%>
+        </nav>
+      </div>
+      <svg slot="toggle-icon" viewBox="0 0 32 32">
+      <path class="st0" d="M24,28H8c-2.2,0-4-1.8-4-4V8c0-2.2,1.8-4,4-4h16c2.2,0,4,1.8,4,4v16C28,26.2,26.2,28,24,28z"/>
+      <line class="st0" x1="10" y1="16" x2="22" y2="16"/>
+      <line class="st0" x1="10" y1="12" x2="22" y2="12"/>
+      <line class="st0" x1="10" y1="20" x2="22" y2="20"/>
+      </svg>
+      <section slot="content">
+        <%= @inner_content %>
+      </section>
+      <footer slot="content">
+        <section>
+        <div><%= @footer.header %></div>
+        <div class="contact-links">
+          <a href={@footer.link1} target="_blank">
+            <img src={Routes.static_path(@conn, "/images/GitHub-Mark-64px.png")} alt="Github Logo"/>
+          </a>
+          <a href={@footer.link2} target="_blank">
+            <img src={Routes.static_path(@conn, "/images/LI-In-Bug.png")} alt="LinkedIn Logo"/>
+          </a>
+        </div>
+        </section>
+      </footer>
+    </sidebar-layout>
+  </body>
+</html>

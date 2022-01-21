@@ -1,0 +1,11 @@
+<section class="phx-hero">
+  <h1><%= @content.header %></h1>
+  <pre id="code-desc">
+  <%= @content.main%>
+  </pre>
+  <%= button "Resume", 
+    to: Routes.download_path(@conn, :resume), 
+    class: "about-btn",
+    target: "_blank", 
+    method: :get %>
+</section>

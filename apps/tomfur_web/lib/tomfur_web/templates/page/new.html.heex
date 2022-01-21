@@ -1,0 +1,31 @@
+<h1> Register Site Page and Contents</h1>
+
+<%= if @changeset.action do %>
+    <div class="alert alert-danger">
+        <p>Page Registration Error. Check the errors below.</p>
+    </div>
+<% end %>
+
+<%= form_for @changeset, Routes.page_path(@conn, :create), fn f ->  %>
+    <div>
+        <%= text_input f, :name, placeholder: "Name" %>
+        <%= error_tag f, :name %>
+    </div>
+    <div>
+        <%= text_input f, :header, placeholder: "Header" %>
+        <%= error_tag f, :header %>
+    </div>
+    <div>
+        <%= textarea f, :main, placeholder: "Main" %>
+        <%= error_tag f, :main %>
+    </div>
+    <div>
+        <%= text_input f, :link1, placeholder: "Primary Link" %>
+        <%= error_tag f, :link1 %>
+    </div>
+    <div>
+        <%= text_input f, :link2, placeholder: "Secondary Link" %>
+        <%= error_tag f, :link2 %>
+    </div>
+    <%= submit "Register Page" %>
+<% end %>

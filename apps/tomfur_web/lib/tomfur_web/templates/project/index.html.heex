@@ -1,0 +1,30 @@
+<section class="phx-hero">
+  <h1><%= @content.header %></h1>
+  <%= text_to_html(@content.main)%>
+</section>
+
+
+<section class="project-cards">
+  <%= for project <- @projects do %> 
+    <div class="project-card">
+      <div class="text">
+        <h2><%= project.name %></h2>
+        <div><%= project.description %></div>
+      </div>
+      <div class="links">
+        <%= button "Github", 
+          to: URI.parse(project.url), 
+          class: "github-btn", 
+          method: :get,
+          target: "_blank" %>
+        <%= content_tag :button, 
+          class: "demo-btn", 
+          data: [name: project.name], 
+          data: [link: project.homepage],
+          disabled: not project.demo do%>
+          Demo
+        <% end %>
+      </div>
+    </div>    
+  <% end %>
+</section>

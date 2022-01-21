@@ -1,0 +1,24 @@
+<section class="phx-hero">
+  <h1><%= @content.header %></h1>
+    <%= text_to_html(@content.main)%>
+</section>
+
+<section class="contact">
+  <div class="contact-form">
+    <%= form_for @conn, Routes.page_path(@conn, :send), [as: :page], fn f ->  %>
+        <div>
+            <%= text_input f, :name, placeholder: "Name" %>
+        </div>
+              <div>
+            <%= text_input f, :email, placeholder: "Email" %>
+        </div>
+        <div>
+            <%= text_input f, :subject, placeholder: "Subject" %>
+        </div>
+        <div>
+            <%= textarea f, :text, placeholder: "Message" %>
+        </div>
+        <%= submit "Send!" %>
+    <% end %>
+  </div>
+</section>
