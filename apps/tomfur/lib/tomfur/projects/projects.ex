@@ -4,12 +4,12 @@ defmodule Tomfur.Projects do
   Projects are listed off of github, and Elixir based projects can have a demo.
   """
   alias Timex
-  alias Tomfur.Projects.GithubDriver
+  alias GithubDriver
   alias Tomfur.Projects.Project
 
   @spec get_projects :: list(Project.t())
   def get_projects() do
-    GenServer.call(GithubDriver, :projects)
+    GithubDriver.fetch_repositories()
     |> process_projects()
   end
 

@@ -1,4 +1,4 @@
-defmodule TomfurWeb.PageViewTest do
+defmodule TomfurWeb.ProjectViewTest do
   use TomfurWeb.ConnCase, async: true
   import Phoenix.View
 

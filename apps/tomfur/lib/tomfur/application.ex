@@ -13,7 +13,6 @@ defmodule Tomfur.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Tomfur.PubSub},
       # Start a worker by calling: Tomfur.Worker.start_link(arg)
-      # Tomfur.Projects.GithubDriver
     ]
 
     Supervisor.start_link(children, strategy: :one_for_one, name: Tomfur.Supervisor)
